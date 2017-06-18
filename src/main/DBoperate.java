@@ -9,14 +9,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.JOptionPane;
 
 import util.Lesson;
 import util.Sc;
+import util.SnoAvg;
 import util.Student;
 
 public class DBoperate {
@@ -98,10 +97,7 @@ public class DBoperate {
 		case "login":
 			List lo = new ArrayList();
 			try {
-				while (result.next()) {
-					// 当结果集不为空时
-					//System.out.println("学号:" + result.getString("column_name"));
-					//System.out.println("学号:" + result.getString("column_name"));	
+				while (result.next()) {		
 					lo.add(0);
 				}
 			} catch (SQLException e) {
@@ -109,9 +105,23 @@ public class DBoperate {
 				e.printStackTrace();
 			}
 			return lo;
-			default:
-				System.out.println("Something wrong in DBoperate");
-				break;
+		case "getAvg1":
+			List<SnoAvg> ga = new ArrayList<SnoAvg>();
+			try {
+				while (result.next()) {		
+					SnoAvg sa = new SnoAvg();
+					sa.setSno(result.getString("Sno"));
+					sa.setAvgGrade(result.getInt("Grade"));
+					ga.add(sa);
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return ga;
+		default:
+			System.out.println("Something wrong in DBoperate");
+			break;
 		}
 		return null;	
 
@@ -145,7 +155,7 @@ public class DBoperate {
 			result = pre.executeQuery();// 执行查询，注意括号中不需要再加参数
 			
 			//System.out.println("result.next() " +result.next().getString("username"));
-			if (sql.getOp().equals("getColumn") ||sql.getOp().equals("select_S") ||sql.getOp().equals("select_C")
+			if (sql.getOp().equals("getAvg1") ||sql.getOp().equals("getColumn") ||sql.getOp().equals("select_S") ||sql.getOp().equals("select_C")
 					||sql.getOp().equals("select_SC") ||sql.getOp().equals("login"))
 					al = choseRes(result, sql.getOp());
 			

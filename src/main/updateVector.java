@@ -5,6 +5,7 @@ import java.util.Vector;
 
 import util.Lesson;
 import util.Sc;
+import util.SnoAvg;
 import util.Student;
 
 public class updateVector {
@@ -14,6 +15,12 @@ public class updateVector {
 		for (int i = 0; i < co.size(); i++) {
 			Vector<String> row = new Vector<String>();
 			switch (UserClient.currentOp) {
+			case "getAvg1":
+				SnoAvg sa = (SnoAvg) co.get(i);
+				row.add(sa.getSno());
+				row.add(Integer.toString(sa.getAvgGrade()));
+				dataVec.add(row);
+				break;
 			case "select_S":
 				Student s = (Student) co.get(i);
 				row.add(s.getSno());

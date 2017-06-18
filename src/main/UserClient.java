@@ -56,7 +56,7 @@ public class UserClient extends JFrame {
 	private static JTable table;
 	public static String currentOp;
 	private JComboBox comboBox;
-	private JComboBox comboBox_1;
+	private JComboBox<String> comboBox_1;
 	private JButton btnNewButton;
 	private JTextField textField;
 	private JFrame f = this;
@@ -73,18 +73,18 @@ public class UserClient extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					UserClient frame = new UserClient();
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					UserClient frame = new UserClient();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 
 	// 更新table
 	private void rewriteTable(List cl, List co) {
@@ -169,14 +169,15 @@ public class UserClient extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			List res = new ArrayList();
 			String value = textField.getText();
-			if (value.equals("")) {
-				JOptionPane.showMessageDialog(f, "查询条件不能为空 ", " 注意",
-						JOptionPane.ERROR_MESSAGE);
-				return;
-			}
+//			if (value.equals("")) {
+//				JOptionPane.showMessageDialog(f, "查询条件不能为空 ", " 注意",
+//						JOptionPane.ERROR_MESSAGE);
+//				return;
+//			}
 			myActionListener ma = new myActionListener();
 			int cu = getCurrentTab();
 			String value1 = comboBox_1.getSelectedItem().toString();
+			
 			res = ma.select(cu, 2, value, value1);
 			List co = (List) res.get(1);
 			if (co.size() == 0) {
@@ -203,6 +204,13 @@ public class UserClient extends JFrame {
 			int cu = getCurrentTab();
 			String item = comboBox_1.getSelectedItem().toString();
 			ma.delete(cu, item, value);
+			if (DBoperate.opState.equals("success")) {
+				JOptionPane.showMessageDialog(f, "删除成功 ", " 注意",
+						JOptionPane.INFORMATION_MESSAGE);
+
+			} else {
+				DBoperate.opState = "success";
+			}
 		}
 
 	}
@@ -343,12 +351,15 @@ public class UserClient extends JFrame {
 						comboBox_1.addItem("Sgender");
 						comboBox_1.addItem("Sage");
 						comboBox_1.addItem("Sdept");
+						comboBox_1.addItem("MaxAge");
+						comboBox_1.addItem("AvgGrade");
 					} else if (now.equals("课程表")) {
 						comboBox_1.removeAllItems();
 						comboBox_1.addItem("Cno");
 						comboBox_1.addItem("Cname");
 						comboBox_1.addItem("Cpno");
 						comboBox_1.addItem("Ccredit");
+						comboBox_1.addItem("MaxCredit");
 					} else {
 						comboBox_1.removeAllItems();
 						comboBox_1.addItem("Sno");
@@ -373,7 +384,7 @@ public class UserClient extends JFrame {
 			myActionListener ma = new myActionListener();
 			int cu = getCurrentTab();
 			res = ma.select(cu, 3, mes, null); // 使用ma中的指定函数处理，获取数据库查询到的数据，返回res
-
+			
 			rewriteTable((List) res.get(0), (List) res.get(1));
 		}
 
@@ -426,7 +437,8 @@ public class UserClient extends JFrame {
 		comboBox_1.addItem("Sgender");
 		comboBox_1.addItem("Sage");
 		comboBox_1.addItem("Sdept");
-
+		comboBox_1.addItem("MaxAge");
+		comboBox_1.addItem("AvgGrade");
 		JButton btnAdd = new JButton("ADD");
 		btnAdd.addActionListener(new addActionListener());
 

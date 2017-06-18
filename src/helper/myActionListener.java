@@ -11,9 +11,10 @@ import main.UserClient;
 import util.Student;
 
 public class myActionListener {
-	
-	public int login(String name,String pw){
-		String sql = "select * from users where username = '" + name + "' and password = '" + pw +"'";
+
+	public int login(String name, String pw) {
+		String sql = "select * from users where username = '" + name
+				+ "' and password = '" + pw + "'";
 		DBoperate db1 = new DBoperate();
 		mSql ms = new mSql();
 		ms.setOp("login");
@@ -21,46 +22,54 @@ public class myActionListener {
 		List al = new ArrayList();
 		al = db1.predo(ms);
 		if (al.size() == 0)
-			return 0;		
+			return 0;
 		else {
 			return 1;
 		}
 	}
-	
-	public void changeOne(int cu, String no1,String no2,String no3,String no4,String no5,String key1,String key2) {
+
+	public void changeOne(int cu, String no1, String no2, String no3,
+			String no4, String no5, String key1, String key2) {
 		String sql = "update ";
-		
+
 		DBoperate db1 = new DBoperate();
 		mSql ms = new mSql();
 		if (cu == 1) {
 			int age;
 			if (no4.equals("")) {
-				sql += "S Set Sno = '" + no1 + "',Sname = '" + no2 +"',Sgender = '" + no3 + "',Sage = " + null +",Sdept = '"
-						+ no5 +"' where Sno = '" + key1 +"'" ;
+				sql += "S Set Sno = '" + no1 + "',Sname = '" + no2
+						+ "',Sgender = '" + no3 + "',Sage = " + null
+						+ ",Sdept = '" + no5 + "' where Sno = '" + key1 + "'";
 			} else {
-				 age = Integer.parseInt(no4);
-				 sql += "S Set Sno = '" + no1 + "',Sname = '" + no2 +"',Sgender = '" + no3 + "',Sage = " + age +",Sdept = '"
-							+ no5 +"' where Sno = '" + key1 +"'" ;
+				age = Integer.parseInt(no4);
+				sql += "S Set Sno = '" + no1 + "',Sname = '" + no2
+						+ "',Sgender = '" + no3 + "',Sage = " + age
+						+ ",Sdept = '" + no5 + "' where Sno = '" + key1 + "'";
 			}
 			ms.setOp("update_s");
 			ms.setSql(sql);
-		} else if (cu == 2){
+		} else if (cu == 2) {
 			if (no3 == null) {
-				no3 ="";
+				no3 = "";
 			}
 			int credit = Integer.parseInt(no4);
-			sql += "C Set Cno = '" + no1 + "',Cname = '" + no2 +"',Cpno = '" + no3 + "',Ccredit = " + credit  +" where Cno = '" + key1 +"'" ;
+			sql += "C Set Cno = '" + no1 + "',Cname = '" + no2 + "',Cpno = '"
+					+ no3 + "',Ccredit = " + credit + " where Cno = '" + key1
+					+ "'";
 			ms.setOp("update_c");
 			ms.setSql(sql);
 		} else {
 			int grade = Integer.parseInt(no3);
-			sql += "SC Set Sno = '" + no1 + "',Cno = '" + no2 +"',Grade = " + grade  +" where Sno = '" + key1 +"' and Cno = '" + key2 +"'";
+			sql += "SC Set Sno = '" + no1 + "',Cno = '" + no2 + "',Grade = "
+					+ grade + " where Sno = '" + key1 + "' and Cno = '" + key2
+					+ "'";
 			ms.setOp("update_sc");
 			ms.setSql(sql);
 		}
 		db1.predo(ms);
 	}
-	public void deleteOne(int cu, String no1,String no2) {
+
+	public void deleteOne(int cu, String no1, String no2) {
 		String sql = "delete from ";
 		DBoperate db1 = new DBoperate();
 		mSql ms = new mSql();
@@ -79,7 +88,8 @@ public class myActionListener {
 		}
 		db1.predo(ms);
 	}
-	public void delete(int cu, String item,String value) {
+
+	public void delete(int cu, String item, String value) {
 		String sql = "delete from ";
 		DBoperate db1 = new DBoperate();
 		mSql ms = new mSql();
@@ -98,29 +108,33 @@ public class myActionListener {
 		}
 		db1.predo(ms);
 	}
-	public void insert(int cu,String a,String b,String c,String d,String e) {
+
+	public void insert(int cu, String a, String b, String c, String d, String e) {
 		String sql = "insert into ";
 		DBoperate db1 = new DBoperate();
 		mSql ms = new mSql();
 		if (cu == 1) {
 			int age = Integer.parseInt(d);
-			sql += "S values('" + a +"','" + b +"','" + c +"'," + d +",'" + e + "')";
+			sql += "S values('" + a + "','" + b + "','" + c + "'," + d + ",'"
+					+ e + "')";
 			ms.setOp("insert_S");
 			ms.setSql(sql);
 		} else if (cu == 2) {
 			int credit = Integer.parseInt(d);
-			sql += "C values('" + a +"','" + b +"','" + c +"'," + credit + ")";
+			sql += "C values('" + a + "','" + b + "','" + c + "'," + credit
+					+ ")";
 			ms.setOp("insert_C");
 			ms.setSql(sql);
 		} else {
 			int grade = Integer.parseInt(c);
-			sql += "SC values('" + a +"','" + b +"'," + c + ")";
+			sql += "SC values('" + a + "','" + b + "'," + c + ")";
 			ms.setOp("insert_SC");
 			ms.setSql(sql);
 		}
 		db1.predo(ms);
 	}
-	public List<List> select(int cu, int op, String s,String s1) {
+
+	public List<List> select(int cu, int op, String s, String s1) {
 		List<List> res = new ArrayList();
 		List al = new ArrayList();
 		List al2 = new ArrayList<Student>();
@@ -147,32 +161,66 @@ public class myActionListener {
 		}
 		switch (op) {
 		case 1:
+			ms.setOp("getColumn");
+			ms.setSql(sql1);
+			al = db1.predo(ms); // 真正对数据库进行查询
 			break;
 		case 2:
-			if (cu == 1)
-				sql2 += " where " + s1 +" = '" + s +"'";
-			else if (cu == 2)
-				sql2 += " where " + s1 +" = '" + s +"'";
-			else
-				sql2 += " where " + s1 +" = '" + s +"'";
+			switch(s1) {
+			case "MaxAge" :
+				ms.setOp("getColumn");
+				ms.setSql(sql1);
+				al = db1.predo(ms); // 真正对数据库进行查询
+				sql2 = "select * from S where Sage = (select MAX(Sage) from S)";
+				break;
+			case "MaxCredit":
+				ms.setOp("getColumn");
+				ms.setSql(sql1);
+				al = db1.predo(ms); // 真正对数据库进行查询
+				sql2 = "select * from C where Ccredit = (Select Max(Ccredit) from C)";
+				break;
+			case "AvgGrade":
+				UserClient.currentOp = "getAvg1";
+				al.add("Sno");
+				al.add("Grade");
+				ms1.setOp("getAvg1");
+				sql2 = "select S.Sno,Avg(SC.Grade) Grade from S,SC where S.Sno not in " +
+						"(select Sno from SC where Grade < 60) and " + 
+						"S.Sno = SC.Sno group by S.Sno order by Avg(SC.Grade) DESC";
+				break;
+			default:
+				ms.setOp("getColumn");
+				ms.setSql(sql1);
+				al = db1.predo(ms); // 真正对数据库进行查询
+				if (cu == 1)
+					sql2 += " where " + s1 + " = '" + s + "'";
+				else if (cu == 2)
+					sql2 += " where " + s1 + " = '" + s + "'";
+				else
+					sql2 += " where " + s1 + " = '" + s + "'";
+				break;
+			}
 			break;
 		case 3:
+			ms.setOp("getColumn");
+			ms.setSql(sql1);
+			al = db1.predo(ms); // 真正对数据库进行查询
 			sql2 = s;
 			break;
 		default:
 			System.out.println("ERROR IN myActionListener");
+			break;
 		}
-		ms.setOp("getColumn");
-		ms.setSql(sql1);
-		al = db1.predo(ms); // 真正对数据库进行查询
+	
 		ms1.setSql(sql2);
 		al2 = db1.predo(ms1);
+
 		
-//		Iterator it = al2.iterator();
-//		while(it.hasNext()) {
-//			Student s1 = (Student) it.next();
-//			System.out.println("S:" + s1.getSname());
-//		}
+		// Iterator it = al2.iterator();
+		// while(it.hasNext()) {
+		// Student s1 = (Student) it.next();
+		// System.out.println("S:" + s1.getSname());
+		// }
 		res.add(al);
 		res.add(al2);
 		return res;
