@@ -192,12 +192,7 @@ public class myActionListener {
 				ms.setOp("getColumn");
 				ms.setSql(sql1);
 				al = db1.predo(ms); // 真正对数据库进行查询
-				if (cu == 1)
-					sql2 += " where " + s1 + " = '" + s + "'";
-				else if (cu == 2)
-					sql2 += " where " + s1 + " = '" + s + "'";
-				else
-					sql2 += " where " + s1 + " = '" + s + "'";
+				sql2 += " where " + s1 + " like '%" + s + "%'";
 				break;
 			}
 			break;
